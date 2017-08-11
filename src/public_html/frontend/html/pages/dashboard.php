@@ -1,71 +1,3 @@
-<?php
-/*
-$url = 'https://www.youtube.com/watch?v=6nU4kfVZMAY';
-
-
-//   "/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/"
-
-
-$string = "The www.stackoverflow.com/questions/43708954/how-to-get-image-link-from-url text you want to filter goes here. http://google.com, https://www.youtube.com/watch?v=K_m7NEDMrV0, https://instagram.com/hellow/ , www.web.whatsapp.com/";
-$url7 = "/(^|[\n ])([\w]*?)((www|wap)\.[^ \,\"\t\n\r<]*)/is";
-$url6 = "/(http\:\/\/|https\:\/\/|ftp\:\/\/|ftps\:\/\/|www\.)[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/";
-
-$url5 = "%^((https?://)|(www\.))([a-z0-9-].?)+(:[0-9]+)?(/.*)?$%i";
-$url4 = '#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#';
-$url3 = '#\www.[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#';
-
-preg_match_all($url6, $string, $match);
-
-echo "<pre>";
-print_r($match[0]); 
-echo "</pre>";
-
-
-*/
-/*
-
-$urlfinal = file_get_contents($url);
-
-preg_match("/<title>(.+)<\/title>/siU", $urlfinal, $matches);
-
-$title = $matches[1];
-
-echo $title;
-
-
-
-
-
-
-$html_data = file_get_contents( $url );
-
-preg_match( '#<meta name="description".*content="([^"]+)">#siU', $html_data, $description);
-
-if (count($description) > 0) {
-    
-  $description = $description[1];
-
-  echo $description;  
-    
-}
-
-*/
-
-
-
-
-//$tags = get_meta_tags('http://fridaycamp.com/home');
-//echo "<pre>";
-//print_r($tags);
-
-
-
-// $url = 'https://api.urlmeta.org/?url=http://php.net/manual/en/function.get-meta-tags.php';
-// $obj = json_decode(file_get_contents($url), true);
-// echo $obj['access_token'];
-
-
-?>
 
 <html lang="en">
     
@@ -311,6 +243,10 @@ if (count($description) > 0) {
                     
                     
                     
+                 
+                    
+                    
+                    
                     
                     
                     <div id="areas2" style="margin-top: 40px;">
@@ -335,7 +271,7 @@ if (count($description) > 0) {
                     </div>
                    
 
-
+ 
                     
                  
 
@@ -373,7 +309,7 @@ if (count($description) > 0) {
                 
                 
                 
-                
+              
                 
                 
                 
@@ -997,6 +933,145 @@ if (count($description) > 0) {
     
     
     
+    
+    
+    
+    
+        function metaLink( data33, lam ) {
+        
+ var dooos1 = function( lam, data56, url, title, desc, img ) {
+     
+     var html45 = "";
+     
+    html45 +=   "<a href=\"  " + url + " \"><div class=\"row\" style=\"border: 2px solid #ddd; border-radius: 5px; padding: 10px; margin: 5px;\"><div>" 
+                
+                
+                        
+html45  += "<img src=\"  " + img +"  \" style=\"width: 100%;\" ></div><div><br>";
+                        
+                
+                        
+                        
+                        
+          html45 +=  " <p style=\" font-family: Josefin Slab; font-size: 15px; font-weight: bold;\">   " + title  +  "</p>";  
+                        
+                       html45 +=    "<p style=\" font-family: Josefin Slab; font-size: 15px; font-weight: bold;\">  " + desc + " </p>        </div> </div></a>  ";
+     
+     
+     
+     
+     
+     
+          $( "#" + lam ).html(html45);
+       };
+            
+  
+          $.ajax( {
+             url: "link.php",
+             type: "POST",
+             async: true,
+             dataType:"text",
+             data: {
+                "preview": 1,
+                 "name": name,
+                 relay: data33
+
+             },
+             success: function( datasss ) {
+                 
+                 if (datasss) {
+                     
+                     
+                    var jsonData16 = JSON.parse( datasss );
+                     
+                     
+            
+                    //  var attach_path12 =  jsonData16[0];
+                   var metaurl = jsonData16.article["url"];
+                    var metatitle = jsonData16.article["title"];
+                     var metaimage = jsonData16.article['image']['src'];
+                     var metadesc = jsonData16.article['description'];
+                     
+                   //  alert(metaimage);
+                     dooos1(lam, datasss, metaurl, metatitle, metadesc, metaimage);
+                     
+                 }
+                 
+
+                 
+             },
+             error: function( xhr, textStatus, errorThrown ) {
+                $.ajax( this );
+                return;
+             }
+          } );
+      
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      function previewLink( name, lam ) {
+        
+
+            
+  
+          $.ajax( {
+             url: "preview.php",
+             type: "POST",
+             async: true,
+             data: {
+                "preview": 1,
+                 "name": name
+
+             },
+             success: function( datass ) {
+                 
+                 if (datass) {
+                     alert(datass)
+                                   metaLink(datass, lam);
+                     
+                 }
+                 
+
+                 
+             },
+             error: function( xhr, textStatus, errorThrown ) {
+                $.ajax( this );
+                return;
+             }
+          } );
+      
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     
     
@@ -1068,6 +1143,10 @@ if (count($description) > 0) {
                 var new_items1 = $( html3 ).hide();
           $( '#areas2' ).prepend( new_items1 );
           new_items1.show( 100 );
+                
+                previewLink(name, lam);
+                
+                
           sendChatData( e, lam, name );
           lam = lam + lam;
        
