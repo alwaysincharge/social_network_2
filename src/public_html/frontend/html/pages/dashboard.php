@@ -1,4 +1,3 @@
-
 <html lang="en">
     
     
@@ -20,7 +19,7 @@
     
     
     
-<body class="dashboard-body">
+<body class="dashboard-body" style="min-height: 110%;">
     
     
     
@@ -462,7 +461,6 @@
             
         }
     
-
     
    /* 
     var file = _('file1').files[0];
@@ -544,14 +542,11 @@
         
         
         function completeHandler(event) {
-
             
             _('status').innerHTML = "";
             
-
               
               sendAppend("", event.target.responseText);
-
             
             $('#file1label').hide(160);
             
@@ -571,7 +566,6 @@
         
         
         function errorHandler(event) {
-
             
             _('status').innerHTML = "Upload fail";
             
@@ -582,7 +576,6 @@
         
         
         function abortHandler(event) {
-
             
             _('status').innerHTML = "Upload aborted";
             
@@ -610,7 +603,7 @@
     $( window ).on( "scroll", function() {
        if ( ( window.innerHeight + window.scrollY ) >= document.body.offsetHeight ) {
           displayFromDatabasePagination();
-           
+             $(window).unbind("scroll");
        }
     } );
     
@@ -630,7 +623,6 @@
     
     
     
-
     
     
     $('#loadagain').click(function() { 
@@ -645,7 +637,6 @@
     $('#chatboxicon').click(function() { 
         
         $('#chatbox').show(100);
-
   });
     
     
@@ -656,7 +647,6 @@
         $('#chatbox').hide(100);
             
         $('#name').val("");    
-
   });
     
     
@@ -666,7 +656,6 @@
       //  $('#file1').show(100);
             
         $('#file1label').toggle(160);
-
   });
     
     
@@ -682,6 +671,7 @@
     $( document ).ready( function() {
        // Display some stuff from the database and when the user reaches the bottom of the page, return more stuff.
        displayFromDatabasePagination();
+        $(window).unbind("scroll");
        //Begin asking the database if new items have been submitted and retrieve and prepend them to the page.
        startPostLoop();
     } );
@@ -776,7 +766,11 @@
     
     // Retrive old rows from database.
     function displayFromDatabasePagination() {
-       $.ajax( {
+      
+var flag;
+
+        
+    flag =   $.ajax( {
           url: "ajax.php",
           type: "POST",
           async: true,
@@ -786,8 +780,10 @@
           },
           success: function( dd ) {
               
-             
-             $('#loadagain').hide();
+              if (flag.readyState == 4 && flag.status == 200) { 
+                                                              
+                                                              
+                                  $('#loadagain').hide();
               $('#loading').hide();
              var jsonData2 = JSON.parse( dd );
              var jsonLength2 = jsonData2.allposts1.length;
@@ -807,7 +803,7 @@
                 html2 += '<div class=\"col-xs-10\">';
                 html2 += '<div class=\"talk-bubble tri-right left-top\" class=\"chat-left-2\">';
                 html2 += '<div class=\"talktext\">';
-                html2 += '<p>' + result2.id + ' () <a href=\" ' + result2.attach_path  + ' \" download>' + result2.attach_name + '</a></p>';
+                html2 += '<p>' + result2.id + ' ( ' +  firstTimeID + ' ) <a href=\" ' + result2.attach_path  + ' \" download>' + result2.attach_name + '</a></p>';
                 html2 += ' </div></div></div></div>';    
                      
                  }  else {
@@ -820,7 +816,7 @@
                 html2 += '<div class=\"col-xs-10\">';
                 html2 += '<div class=\"talk-bubble tri-right left-top\" class=\"chat-left-2\">';
                 html2 += '<div class=\"talktext\">';
-                html2 += '<p>' + result2.id + " () " + result2.name + '</p>';
+                html2 += '<p>' + result2.id + ' ( ' +  firstTimeID + ' ) ' + result2.name + '</p>';
                 html2 += ' </div></div></div></div>';  
                      
                  }
@@ -828,19 +824,54 @@
                  
              
              }
-             $( '#areas2' ).append( html2 );
+             $( '#areas2' ).append( html2 );                            
+                                                              
+                                                              
+                                                              
+                                                              
+                                                              } else {
+        
+        
+        
+        alert("AJAX is going on");
+        
+    }
+             
+             
           },
             error: function( xhr, textStatus, errorThrown ) {
                
                $('#loading').hide();
                 $('#loadagain').show();
                 
+             },
+                    complete: function( ) {
+               
+             // $(window).on("scroll");
+                        
+                        
+                        
+            $(window).bind("scroll", (function () {
+                
+                
+                
+                  if ( ( window.innerHeight + window.scrollY ) >= document.body.offsetHeight ) {
+          displayFromDatabasePagination();
+             $(window).unbind("scroll");
+       }
+                
+                
+                
+	//alert("hhhhhhhhhhh");
+}
+                                     
+                                     ));            
+                
              }
-       } );
+       } ); 
         
         $('#loading').show();
     }
-
     
     
     
@@ -919,7 +950,6 @@
                 if ( datas == 23 ) {
                    dooo( slate );
                 } else {}
-
              },
              error: function( xhr, textStatus, errorThrown ) {
                 $.ajax( this );
@@ -975,7 +1005,6 @@ html45  += "<img src=\"  " + img +"  \" style=\"width: 100%;\" ></div><div><br>"
                 "preview": 1,
                  "name": name,
                  relay: data33
-
              },
              success: function( datasss ) {
                  
@@ -997,7 +1026,6 @@ html45  += "<img src=\"  " + img +"  \" style=\"width: 100%;\" ></div><div><br>"
                      
                  }
                  
-
                  
              },
              error: function( xhr, textStatus, errorThrown ) {
@@ -1022,7 +1050,6 @@ html45  += "<img src=\"  " + img +"  \" style=\"width: 100%;\" ></div><div><br>"
     
       function previewLink( name, lam ) {
         
-
             
   
           $.ajax( {
@@ -1032,7 +1059,6 @@ html45  += "<img src=\"  " + img +"  \" style=\"width: 100%;\" ></div><div><br>"
              data: {
                 "preview": 1,
                  "name": name
-
              },
              success: function( datass ) {
                  
@@ -1042,7 +1068,6 @@ html45  += "<img src=\"  " + img +"  \" style=\"width: 100%;\" ></div><div><br>"
                      
                  }
                  
-
                  
              },
              error: function( xhr, textStatus, errorThrown ) {
@@ -1072,7 +1097,6 @@ html45  += "<img src=\"  " + img +"  \" style=\"width: 100%;\" ></div><div><br>"
     
     
     
-
     
     
     

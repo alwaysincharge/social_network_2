@@ -88,11 +88,11 @@ if(isset($_POST['felted']))  {
     
       if ($laminate == 0) {
           
-          $query2 = "select * from timeline order by id desc limit 12";
+          $query2 = "select * from timeline order by id desc limit 2";
           
       } else {
           
-          $query2 = "select * from timeline where id < '{$laminate}' order by id desc limit 12";
+          $query2 = "select * from timeline where id < '{$laminate}' order by id desc limit 2";
           
       }
     
